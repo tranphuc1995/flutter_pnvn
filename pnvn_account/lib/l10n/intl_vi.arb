@@ -1,0 +1,22 @@
+{
+   "@@locale": "en",
+   "hello": "Hello",
+   "account":"Tài khoản",
+   "not_identity":"Chưa xác thực",
+   "identity":"Đã xác thực",
+   "identityTitle":"Xác thực danh tính",
+   "recommend_app":"Góp ý về ứng dụng",
+   "about_us":"Về chúng tôi",
+   "change_pass":"Đổi mật khẩu",
+   "logout":"Đăng xuất",
+   "feed_back":"Góp ý về Ứng dụng",
+   "content":"Sẽ thật tuyệt nếu nhận được góp ý của bạn nhằm nâng cao chất lượng của Ứng dụng",
+   "hint_feed_back":"Nhập góp ý của bạn tại đây ...",
+   "send":"Gửi",
+   "thanks":"Cám ơn bạn!",
+   "thnaks_content":"Chúng tôi rất trân trọng đánh giá của bạn. Hãy tiếp tục trải nghiệm ứng dụng bạn nhé!",
+   "close":"Đóng",
+   "local_auth":"Cài đặt Face ID hoặc Vân tay",
+   "auth_finger":"Đăng nhập bằng vân tay",
+   "auth_face":"Đăng nhập bằng Face ID"
+}

@@ -1,0 +1,36 @@
+options:
+  max-time: 60
+
+definitions:
+  steps:
+    - step: &build-deploy-android
+        name: Build and Release Android app
+        image: cirrusci/flutter
+        script:
+          - export $(cat app/release-version.txt | xargs)
+          - export FILE=HLHPN2-UAT-${BUILD_NAME}-${BUILD_NUMBER}.aab
+          - for f in $(grep -rl --exclude bitbucket-pipelines.yml one.galaxy.hoilhpn.uat .); do sed -i "s/one.galaxy.hoilhpn.uat/${CICDENV_PACKAGE_NAME}/g" $f; done
+          - sed -i "s/signingConfig signingConfigs.debug/signingConfig signingConfigs.release/g" app/android/app/build.gradle
+          - cd app/android/
+          - echo ${CICDENV_ANDROID_KEY_PROP_ENCODED} | base64 -d > key.properties
+          - echo ${CICDENV_ANDROID_UPLOADKEY_ENCODED} | base64 -d > app/upload-keystore.jks
+          - echo ${CICDENV_GOOGLE_SA} | base64 -d > app/google-services.json
+          - bundle install
+          - bundle exec fastlane add_plugin appcenter
+          - bundle exec fastlane android aab
+          - bundle exec fastlane android release_${BITBUCKET_DEPLOYMENT_ENVIRONMENT}
+        after-script:
+          - >-
+            if [ ${BITBUCKET_EXIT_CODE} -ne 0 ]; then curl -XPOST -H 'Content-type:application/json' -d '{"@type":"MessageCard","@context":"https://schema.org/extensions","themeColor":"d63333","summary":"Pipeline Info","sections":[{"activityTitle":"Pipeline #'${BITBUCKET_BUILD_NUMBER}'","activitySubtitle":"Failed","activityImage":"https://img.icons8.com/external-wanicon-flat-wanicon/64/000000/external-fire-nature-wanicon-flat-wanicon.png","facts":[{"name":"Project","value":"'${BITBUCKET_PROJECT_KEY}'"},{"name":"Repository","value":"'${BITBUCKET_REPO_SLUG}'"},{"name":"Result","value":"'${BITBUCKET_GIT_HTTP_ORIGIN}'/addon/pipelines/home#!/results/'${BITBUCKET_BUILD_NUMBER}'"}],"markdown":"true"}]}' ${MS_TEAMS_WEBHOOK}; else curl -XPOST -H 'Content-type:application/json' -d '{"@type":"MessageCard","@context":"https://schema.org/extensions","themeColor":"64a837","summary":"Pipeline Info","sections":[{"activityTitle":"Pipeline #'${BITBUCKET_BUILD_NUMBER}'","activitySubtitle":"Successful","activityImage":"https://img.icons8.com/color/144/000000/ok--v1.png","facts":[{"name":"Project","value":"'${BITBUCKET_PROJECT_KEY}'"},{"name":"Repository","value":"'${BITBUCKET_REPO_SLUG}'"},{"name":"Result","value":"'${BITBUCKET_GIT_HTTP_ORIGIN}'/addon/pipelines/home#!/results/'${BITBUCKET_BUILD_NUMBER}'"}],"markdown":"true"}]}' ${MS_TEAMS_WEBHOOK}; fi
+        clone:
+          enabled: true
+        runs-on:
+          - g1.runner
+        size: 2x
+
+pipelines:
+  tags:
+    release/staging-android-*:
+      - step:
+          <<: *build-deploy-android
+          deployment: Staging

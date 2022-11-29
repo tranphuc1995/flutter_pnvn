@@ -1,0 +1,24 @@
+default_platform(:android)
+
+platform :android do
+    desc "Build appbundle"
+    lane :aab do
+        sh "flutter build appbundle --release --build-name $BUILD_NAME --build-number $BUILD_NUMBER"
+    end
+
+    desc "Distribute Android apps to testers"
+    lane :release_staging do
+        sh "cp ../../build/app/outputs/bundle/release/app-release.aab ../HLHPN2-UAT-${BUILD_NAME}-${BUILD_NUMBER}.aab"
+        appcenter_upload(
+          api_token: ENV["CICDENV_APPCENTER_TOKEN"],
+          owner_type: "organization",
+          owner_name: "GalaxyOne",
+          app_name: ENV["CICDENV_APPCENTER_ANDROID_APP_NAME"],
+          file: ENV["FILE"],
+          destinations: "HLHPN2",
+          notify_testers: true,
+          release_notes: sh("cat ../../release-notes.txt"),
+        )
+  end
+
+end

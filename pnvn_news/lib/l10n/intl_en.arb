@@ -1,0 +1,10 @@
+{
+   "@@locale": "en",
+   "hello": "Hello",
+   "refresh":"Tải lại trang",
+   "share":"Chia sẻ",
+   "copy":"Sao chép link",
+   "open_in_browser":"Mở trên trình duyệt",
+   "news":"Tin tức",
+   "copied":"Đã sao chép" 
+}

@@ -1,0 +1,2 @@
+- Fix load thumbnail.
+_ Fix mute video search.

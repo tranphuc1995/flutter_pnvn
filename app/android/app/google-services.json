@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "782528058849",
+    "project_id": "hlhpn2-uat",
+    "storage_bucket": "hlhpn2-uat.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:782528058849:android:ee217c97902850488eeea0",
+        "android_client_info": {
+          "package_name": "one.galaxy.hoilhpn.uat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "782528058849-p63po0e0crrihtjj7h4h59qdnbgmudgt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAccZQMo-bfj6-iwgEkABrH8d1trOn-wOI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "782528058849-p63po0e0crrihtjj7h4h59qdnbgmudgt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
